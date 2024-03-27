@@ -12,31 +12,29 @@ export const SendMoney = () => {
     const name=searchparams.get("name");
     const transers=()=>{
         fetch("http://localhost:3000/api/v1/account/transfer",{
-            method:'POST',
-            headers:{
+            method:"POST",headers:{
+                    'Content-Type': 'application/json',
                 Authorization:"Bearer "+localStorage.getItem("token")
             },
-            body:JSON.stringify({
-                to:id,
-                amount:amount
-            })
+                body:JSON.stringify({
+                    to:id,
+                    amount:amount
+                })  
         })
-        .then(async response => {
-            const data = await response.json();
-            if (response.ok) {
-                
-                alert(Amount+" sent: " + data.message); // Concatenate the message with the string
-                navigate("/dashboard");
-            } 
+        .then(async response=>{
+            const data =await response.json();
+            if(response.ok){
+                alert(amount+data.message); 
+                navigate("/dashboard")               
+            }
             else{
-               
                 throw new Error(data.message);
             }
         })
-        .catch(e => {
-            alert("Error: "+e.message ); // Concatenate the error message with the string
-        });
-    }
+        .catch((e)=>alert("error : "+e));
+
+
+}
     
     
     return <div class="flex justify-center h-screen bg-gray-100">
@@ -67,10 +65,10 @@ export const SendMoney = () => {
                         class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                         id="amount"
                         placeholder="Enter amount"
-                        onChange={()=>{setAmount(e.target.value)}}
+                        onChange={(e)=>{setAmount(e.target.value)}}
                     />
                     </div>
-                    <button onClick={()=>{transers()}} class="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
+                    <button onClick={async()=> {await transers()}} class="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
                         Initiate Transfer
                     </button>
                 </div>

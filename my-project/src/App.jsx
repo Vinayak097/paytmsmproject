@@ -21,7 +21,7 @@ function App() {
       <div>
         
           <Routes>
-            <Route path='/' element={<Land sign={"/signin"} Signup={"/signup"}></Land>}></Route>
+            <Route path='/' element={<Signup></Signup>}></Route>
             <Route path='/signup' element={<Signup />} />
             <Route path='/signin' element={<Signin/>} />
             <Route path='/dashboard'  element={<Users></Users>}/>
