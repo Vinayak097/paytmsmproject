@@ -10,6 +10,7 @@ import { Signup } from './pages/Signup';
 import { SendMoney } from './pages/SendMoney'
 import { Appbar } from './pages/Appbar';
 import { BottomWarning } from './components/BottomWarning';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path='/dashboard'  element={<Users></Users>}/>
             <Route path="/send" element={<SendMoney></SendMoney>}></Route>
             <Route path="/appbar" element={<Appbar></Appbar>}></Route>
+            <Route path='/main' element={<Home/>}></Route>
             
 
           </Routes>

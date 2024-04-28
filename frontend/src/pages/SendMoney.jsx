@@ -31,7 +31,7 @@ export const SendMoney = () => {
                 throw new Error(data.message);
             }
         })
-        .catch((e)=>alert("error : "+e));
+        .catch((e)=>alert("error sendmoney: "+e));
 
 
 }
