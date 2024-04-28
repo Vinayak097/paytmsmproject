@@ -3,6 +3,7 @@ const express = require('express');
 const { authMiddleware } = require('../middleware');
 const { Account } = require('../db');
 const { default: mongoose } = require('mongoose');
+const {onTransactionMSG}=require('../db')
 
 const router = express.Router();
 
@@ -23,6 +24,9 @@ router.post("/transfer", authMiddleware, async (req, res) => {
     const { amount, to } = req.body;
 
     // Fetch the accounts within the transaction
+    if(req.userId===to){
+        return res.status(400).json({message:" self transfer not implemented yet"})
+    }
     const account = await Account.findOne({ userId: req.userId }).session(session);
 
     if (!account || account.balance < amount) {
@@ -40,10 +44,21 @@ router.post("/transfer", authMiddleware, async (req, res) => {
             message: "Invalid account"
         });
     }
-
+    const senderId = await req.userId;
     // Perform the transfer
     await Account.updateOne({ userId: req.userId }, { $inc: { balance: -amount } }).session(session);
     await Account.updateOne({ userId: to }, { $inc: { balance: amount } }).session(session);
+    // const newMessage = new onTransactionMSG({
+    //     senderId,
+    //     receiverId:to,
+    //     amount:amount,
+    // });
+    
+    await onTransactionMSG.create({
+        senderId:senderId,
+        recieverId:to,
+        amount:amount
+    });
 
     // Commit the transaction
     await session.commitTransaction();
@@ -52,4 +67,16 @@ router.post("/transfer", authMiddleware, async (req, res) => {
     });
 });
 
+
+router.get('/getTchat', authMiddleware,async(req,res)=>{
+
+    const {recieverId}=req.body;    
+    const chat=await onTransactionMSG.find({
+        userId:req.userId,
+        recieverId:recieverId
+    })
+
+    res.json({chat:chat})
+    return;
+})
 module.exports = router;

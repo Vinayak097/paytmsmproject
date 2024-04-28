@@ -1,11 +1,17 @@
 // backend/db.js
 const mongoose = require('mongoose');
+const { string } = require('zod');
 
-mongoose.connect("mongodb+srv://newuser:simple@cluster0.nezzouv.mongodb.net/")
+
+mongoose.connect("mongodb+srv://newuser:simple@cluster0.nezzouv.mongodb.net/ptm-sm2")
+     
+           
+ 
+
 
 // Create a Schema for Users
 const userSchema = new mongoose.Schema({
-    username: {
+    email: {
         type: String,
         required: true,
         unique: true,
@@ -44,11 +50,33 @@ const accountSchema = new mongoose.Schema({
         required: true
     }
 });
+const Transactions=new mongoose.Schema({
+    senderId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required:true
 
+    },
+    recieverId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        required:true
+
+    },
+    amount:{
+        type:Number,
+        required:true
+    }
+
+},{ timestamps: true })
+
+
+const onTransactionMSG=mongoose.model('TransactionsMSG',Transactions);
 const Account = mongoose.model('Account', accountSchema);
 const User = mongoose.model('User', userSchema);
 
 module.exports = {
 	User,
-    Account
+    Account,
+    onTransactionMSG
 };
