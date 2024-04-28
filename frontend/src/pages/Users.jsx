@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export const Users = ({name}) => {
     const [filter, setFilter] = useState("");
     const [users, setUsers] = useState([]);
-    const [value,setValue]=useState(0.0)
+    const [value,setValue]=useState(0)
     
     useEffect(()=>{
         getbalance()
@@ -26,6 +26,9 @@ export const Users = ({name}) => {
                 "Authorization": "Bearer " + token
             }, 
         });
+        if(!response.ok){
+            return ;
+        }
         const ans= await response.json();
         
         setValue(ans.balance)
@@ -53,15 +56,13 @@ export const Users = ({name}) => {
     
 
     const fetchUsers = () => {
-        fetch(`http://localhost:3000/api/v1/user/bulk?filter=${filter}`, {
+        fetch(`http://localhost:3000/api/v1/user/bulk?filter=${filter}&name=${name}`, {
             method: 'GET',
             
             headers: {
                 'Content-Type': 'application/json'
             },
-            body:{
-                name:name||""
-            }
+           
             
             
         })
@@ -91,7 +92,7 @@ export const Users = ({name}) => {
                 <input onChange={(e) => { setFilter(e.target.value) }} type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded border-slate-200" />
             </div>
             <div>
-                {users.map(user => <User  user={user} />)}
+                {users.map(user => <User key={user._id} user={user} />)}
             </div>
         </>
     );

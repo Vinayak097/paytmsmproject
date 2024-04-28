@@ -6,37 +6,42 @@ import { InputBox } from "../components/InputBox"
 import { SubHeading } from "../components/SubHeading"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import { Toaster, toast } from 'react-hot-toast';
+import { useLocalStorage } from "../hooks/localstorage"
+import { useUser } from "../hooks/user"
 // import { BottomWarning } from "../components/BottomWarning"
 export const Signin = () => {
   const navigate=useNavigate();
-  const [Email,setEmail]=useState("");
+  const [email,setemail]=useState("");
   const [Password,setPassword]=useState("")
+  const {addUser}=useUser()
    function naves(){
+    if(!email || !Password){
+      toast.error("fill credintials")
+      return 
+    }
      fetch("http://localhost:3000/api/v1/user/signin",{
     method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
       body:JSON.stringify({
-        username:Email,
+        email:email,
         password:Password
       })
     })
     .then(async(response) =>{
       if(response.ok){
       const data=await response.json();
-      if(localStorage.getItem("token")){
-        localStorage.removeItem("token")
-      }
-      localStorage.setItem("token",data.token);
+      addUser(data.user,data.token);
       navigate("/dashboard");
-      }
-      
+      }else{
+        throw new error 
+            }
+
     })
-    
-    
     .catch((error) => 
-    alert("error"));
+    alert("error in sigin",error));
   }  
 
     return <div className="bg-slate-300 h-screen flex justify-center">
@@ -45,8 +50,8 @@ export const Signin = () => {
         <Heading label={"Sign in"} />
         <SubHeading label={"Enter your credentials to access your account"} />
         <InputBox onChange={(e)=>{
-          setEmail(e.target.value);
-        }} placeholder="harkirat@gmail.com" label={"Email"} />
+          setemail(e.target.value);
+        }} placeholder="harkirat@gmail.com" label={"email"} />
         <InputBox onChange={(e)=>{
           setPassword(e.target.value);
         }} placeholder="123456" label={"Password"} />
@@ -54,6 +59,7 @@ export const Signin = () => {
           <Button onClick={async ()=>{await naves()}} label={"Sign in"} />
         </div>
         <BottomWarning label={"Don't have an account?"} buttonText={"Sign up"} to={"/signup"} />
+        <Toaster></Toaster>
         
       </div>
     </div>

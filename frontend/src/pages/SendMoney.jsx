@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useSearchParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context";
 
 
 export const SendMoney = () => {
     const [amount,setAmount]=useState(0);
     const navigate=useNavigate();
-
+    
     const [searchparams]=useSearchParams();
+    const user=useContext(UserContext);
     const id=searchparams.get("id");
     const name=searchparams.get("name");
     const transers=()=>{
@@ -48,7 +50,7 @@ export const SendMoney = () => {
                 <div class="p-6">
                 <div class="flex items-center space-x-4">
                     <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center">
-                    <span class="text-2xl text-white">{name[0].toUpperCase()}</span>
+                    <span class="text-2xl text-white">{name[0].toUpperCase()} </span>
                     </div>
                     <h3 class="text-2xl font-semibold">{name}</h3>
                 </div>

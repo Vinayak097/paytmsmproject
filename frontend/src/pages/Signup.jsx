@@ -5,17 +5,18 @@ import { Heading } from "../components/Heading"
 import { InputBox } from "../components/InputBox"
 import { SubHeading } from "../components/SubHeading"
 import { useNavigate } from "react-router-dom"
-import axios from "axios"
+import { useUser } from "../hooks/user"
 
-import { Signin } from "./Signin"
 export const Signup = () => {
   const navigate=useNavigate();
+  const {addUser}=useUser();
   
   const [username,setUsername]=useState("");
   const [Password,setPassword]=useState("");
   const [firstName,setfristName]=useState("");
   const [lastName,setlastName]=useState("");
   const handleSignup = async() => {
+    
     await fetch("http://localhost:3000/api/v1/user/signup", {
             method: 'POST',
             headers: {
@@ -35,7 +36,7 @@ export const Signup = () => {
         if(localStorage.getItem("token")){
           localStorage.removeItem("token")
         }
-        localStorage.setItem("token" ,data.token)
+        addUser(data.user,data.token);
 
         navigate("/dashboard")
         

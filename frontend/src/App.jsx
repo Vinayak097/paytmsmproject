@@ -1,38 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
+import './App.css'
 import { BrowserRouter as Router, Routes, Route,Link } from 'react-router-dom';
 import { Users } from './pages/Users';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
 import { SendMoney } from './pages/SendMoney'
 import { Appbar } from './pages/Appbar';
-import { BottomWarning } from './components/BottomWarning';
+
 import Home from './pages/Home';
 
 function App() {
   return (
     <div>
       <div>
-        
-      </div>
+       </div>
       <Router>
-      <div>
-        
+      <div>      
           <Routes>
             <Route path='/' element={<Signup></Signup>}></Route>
+           
             <Route path='/signup' element={<Signup />} />
             <Route path='/signin' element={<Signin/>} />
             <Route path='/dashboard'  element={<Users></Users>}/>
             <Route path="/send" element={<SendMoney></SendMoney>}></Route>
             <Route path="/appbar" element={<Appbar></Appbar>}></Route>
             <Route path='/main' element={<Home/>}></Route>
-            
-
-          </Routes>
-      
+          </Routes>      
         </div>
         </Router>
       </div>

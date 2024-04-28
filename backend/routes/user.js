@@ -54,7 +54,8 @@ router.post("/signup", async (req, res) => {
 
     res.json({
         message: "User created successfully",
-        token: token
+        token: token,
+        user:newUser
     })
             // Handle successful user creation
         }
@@ -77,7 +78,7 @@ router.post("/signin", async (req, res) => {
     const { success } = signinBody.safeParse(req.body)
     if (!success) {
         return res.status(411).json({
-            message: "Email already taken / Incorrect inputs"
+            message: "not passed zod / Incorrect inputs"
         })
     }
     try{
@@ -102,7 +103,8 @@ router.post("/signin", async (req, res) => {
         userId: user._id
     }, JWT_SECRET);
     res.json({
-        token: token
+        token: token,
+        user:user
     })
 }catch(e){
     res.status(500)

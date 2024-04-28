@@ -8,6 +8,7 @@ const {onTransactionMSG}=require('../db')
 const router = express.Router();
 
 router.get("/balance", authMiddleware, async (req, res) => {
+    try{
     const account = await Account.findOne({
         userId: req.userId
     });
@@ -15,6 +16,9 @@ router.get("/balance", authMiddleware, async (req, res) => {
     res.json({
         balance: account.balance
     })
+}catch(e){
+    return res.status(400).json("unthourized",e)
+}
 });
 
 router.post("/transfer", authMiddleware, async (req, res) => {
