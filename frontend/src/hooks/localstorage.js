@@ -10,12 +10,15 @@ export const useLocalStorage = () => {
     setValue(value);
   };
 
-  
+  const getItem=()=>{
+    const token=localStorage.getItem("token")
+    return token;
+  }
 
   const removeItem = (key) => {
     localStorage.removeItem(key);
     setValue(null);
   };
 
-  return { value, setItem,  removeItem };
+  return { value, setItem, getItem, removeItem };
 };

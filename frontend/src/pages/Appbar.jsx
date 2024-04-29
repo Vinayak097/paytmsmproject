@@ -13,7 +13,7 @@ export const Appbar = () => {
 
    
 
-    return <div className="flex justify-center  h-20% ">
+    return <div className="flex justify-center w-[90%] m-2 h-20% ">
 
      <div className="shadow h-14 flex justify-between  rounded-xl w-3/4 bg-white px-6  mt-1">
         <div className="flex font-bold text-lg flex-col justify-center h-full text color text-purple-700  ">
