@@ -42,7 +42,9 @@ router.post("/signup", async (req, res) => {
             });
             console.log("pass",newUser)
     const userId = newUser._id;
+    delete newUser.password;
     console.log("signup" ,userId)
+    
     await Account.create({
         userId,
         balance: 1 + Math.random() * 10000
@@ -55,12 +57,17 @@ router.post("/signup", async (req, res) => {
     res.json({
         message: "User created successfully",
         token: token,
-        user:newUser
+        user:{
+            userId:newUser._id,
+            firstName:newUser.firstName,
+            email:newUser.email,
+            lastName:newUser.lastName, 
+        }
     })
             // Handle successful user creation
         }
     } catch (error) {
-        res.json({e:error})
+        res.json({e:error,msg:"error in signup"})
         // Handle other errors
     }
 
@@ -102,9 +109,15 @@ router.post("/signin", async (req, res) => {
     const token = jwt.sign({
         userId: user._id
     }, JWT_SECRET);
-    res.json({
+    
+    res.status(201).json({
         token: token,
-        user:user
+        user:{
+            userId:user._id,
+            firstName:user.firstName,
+            email:user.email,
+            lastName:user.lastName, 
+        }
     })
 }catch(e){
     res.status(500)
@@ -142,7 +155,7 @@ router.get("/bulk", async (req, res) => {
     const uname=req.query.name||"";
     console.log("usrs filter",filter )
     try {
-        const users = (await User.find({email: { $regex: filter, $options: 'i' },name:{$ne:uname}})); // Find all users without any filtering
+        const users = await User.find({email: { $regex: filter, $options: 'i' },name:{$ne:uname}}).select("-password"); // Find all users without any filtering
        
         res.json({
             users: users.map(user => ({

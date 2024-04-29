@@ -3,6 +3,7 @@ import { Button } from "../components/Button";
 import { Appbar } from "./Appbar";
 import { Balance } from "./Balance";
 import { useNavigate } from "react-router-dom";
+import toast, { ToastBar, Toaster } from "react-hot-toast";
 
 export const Users = ({name}) => {
     const [filter, setFilter] = useState("");
@@ -82,19 +83,18 @@ export const Users = ({name}) => {
     };
 
     return (
-        <>
-            <div className=""><Appbar></Appbar></div>
-            <div className="mt-2"><Balance  value={value}></Balance></div>
-            <div className="font-bold mt-6 text-lg">
-                Users
+          <div className=" bg-white h-full rounded-lg  w-full ">
+            
+            <div className="py-2 mx-2 ">
+                <input  className="" onChange={(e) => { setFilter(e.target.value) }} type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded bg-purple-100 " />
             </div>
-            <div className="my-2">
-                <input onChange={(e) => { setFilter(e.target.value) }} type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded border-slate-200" />
-            </div>
-            <div>
+            <div className="">
                 {users.map(user => <User key={user._id} user={user} />)}
             </div>
-        </>
+            </div>     
+            
+           
+        
     );
 };
 function User({ user }) {
@@ -105,10 +105,10 @@ function User({ user }) {
         
     }
     return (
-        <div className="flex justify-between">
-            <div className="flex">
-                <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
-                    <div className="flex flex-col justify-center h-full text-xl">
+        <div className="flex max-w-xl gap-4  justify-between">
+            <div className="flex ">
+                <div className="rounded-full h-9 w-9 bg-purple-200 flex justify-center mt-1 mr-2">
+                    <div className="flex flex-col justify-center h-full text-md">
                         {user.firstName[0]}
                     </div>
                 </div>
@@ -119,13 +119,15 @@ function User({ user }) {
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center h-ful">
+            <div className="flex flex-col mx-2 justify-center h-ful">
                 <Button onClick={()=>{
                     console.log(" clicke on sendmoney")
                     changepage();                                    
                     
-                }} label={"Send Money"} />
+                }} label={"pay"} />
+                
             </div>
+            <Toaster/>
         </div>
     );
 }

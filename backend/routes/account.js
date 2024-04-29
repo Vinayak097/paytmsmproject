@@ -72,15 +72,22 @@ router.post("/transfer", authMiddleware, async (req, res) => {
 });
 
 
-router.get('/getTchat', authMiddleware,async(req,res)=>{
+router.post('/getTchat', authMiddleware,async(req,res)=>{
 
-    const {recieverId}=req.body;    
+       
+    try{ 
+        const {recieverId}=req.body;
+        console.log( req.userId,recieverId)
     const chat=await onTransactionMSG.find({
-        userId:req.userId,
+        senderId:req.userId,
         recieverId:recieverId
     })
-
     res.json({chat:chat})
     return;
+}catch(e){
+    res.status(500).json("error in /getchat",e)
+}
+
+    
 })
 module.exports = router;

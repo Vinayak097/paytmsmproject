@@ -1,9 +1,7 @@
 
-import { useContext } from "react"
-import { UserContext } from "../context"
 
 export const Balance = ({ value }) => {
-    const {user, setname}=useContext(UserContext);
+    
   
    
     console.log("value in balance ",value)
