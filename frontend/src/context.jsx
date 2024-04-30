@@ -4,13 +4,10 @@ import { createContext, useState } from "react";
 const UserContext=createContext();
 
 const UserProvider=(props)=>{
-    const usedetail=JSON.parse(localStorage.getItem("user"))
+    
     const {children}=props;
-    if(usedetail){
-        console.log("usedetail",usedetail)   
-           
-    }
-    const [user ,setname]=useState(usedetail);
+    
+    const [user ,setname]=useState();
    
     
     return <UserContext.Provider value={{user,setname}}>

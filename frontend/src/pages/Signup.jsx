@@ -29,16 +29,14 @@ export const Signup = () => {
                 password: Password
             })
         })
-        .then(response => response.json())
         
-      .then(data => {
+        
+      .then(r => {const data=r.json();
         console.log(data.token," token setteld");
-        if(localStorage.getItem("token")){
-          localStorage.removeItem("token")
-        }
+        
         addUser(data.user,data.token);
 
-        navigate("/dashboard")
+        navigate("/main")
         
       })
       .catch(error => console.log('Error fetching data:', error)
@@ -64,7 +62,7 @@ export const Signup = () => {
           setPassword(e.target.value);
         }} placeholder="123456" label={"Password"} />
         <div className="pt-4">
-          <Button onClick={async()=>{ await handleSignup()
+          <Button onClick={()=>{ handleSignup()
           
           }} label={"Sign up"} />
         </div>

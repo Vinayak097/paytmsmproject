@@ -76,7 +76,11 @@ router.post('/getTchat', authMiddleware,async(req,res)=>{
 
        
     try{ 
+
         const {recieverId}=req.body;
+        if(req.userId===recieverId){
+            return res.json("sender and reciever nee to be different ")
+        }
         console.log( req.userId,recieverId)
     const chat=await onTransactionMSG.find({
         senderId:req.userId,

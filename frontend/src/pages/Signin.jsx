@@ -34,7 +34,7 @@ export const Signin = () => {
       if(response.ok){
       const data=await response.json();
       addUser(data.user,data.token);
-      navigate("/dashboard");
+      navigate("/main");
       }else{
         throw new error 
             }

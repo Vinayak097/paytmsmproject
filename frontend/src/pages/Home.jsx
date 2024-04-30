@@ -3,7 +3,7 @@ import { Appbar } from './Appbar'
 import Sidebar from '../components/Sidebar'
 import { SendMoney } from './SendMoney'
 import { Users } from './Users'
-import Transaction from './Transaction'
+
 
 function Home() {
   return (
@@ -20,7 +20,7 @@ function Home() {
 
             </div>
             <div className='h-5/6 w-3/6'>
-            <Transaction></Transaction>
+            
             
 
             </div>

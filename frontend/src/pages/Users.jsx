@@ -11,7 +11,7 @@ export const Users = ({name}) => {
     const [value,setValue]=useState(0)
     
     useEffect(()=>{
-        getbalance()
+        getbalance()    
     })
     async function getbalance() {
         const token = localStorage.getItem("token"); // Retrieve token from localStorage
@@ -86,7 +86,7 @@ export const Users = ({name}) => {
           <div className=" bg-white h-full rounded-lg  w-full ">
             
             <div className="py-2 mx-2 ">
-                <input  className="" onChange={(e) => { setFilter(e.target.value) }} type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded bg-purple-100 " />
+                <input   onChange={(e) => { setFilter(e.target.value) }} type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded bg-blue-100 " />
             </div>
             <div className="">
                 {users.map(user => <User key={user._id} user={user} />)}
@@ -107,7 +107,7 @@ function User({ user }) {
     return (
         <div className="flex max-w-xl gap-4  justify-between">
             <div className="flex ">
-                <div className="rounded-full h-9 w-9 bg-purple-200 flex justify-center mt-1 mr-2">
+                <div className="rounded-full h-9 w-9 bg-blue-200 flex justify-center mt-1 mr-2">
                     <div className="flex flex-col justify-center h-full text-md">
                         {user.firstName[0]}
                     </div>
