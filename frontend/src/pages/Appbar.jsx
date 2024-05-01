@@ -1,11 +1,19 @@
 
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/user";
+import { UserContext } from "../context";
+import { useContext } from "react";
 
 export const Appbar = () => {
+    
+    const { getUser}=useUser()
+    const user=getUser();
+    
+
+    
     const navigate=useNavigate()
     
-    const {user,removeUser}=useUser()
+    const {removeUser}=useUser()
     const exit=()=>{
         removeUser("token");
         navigate("/signin")
@@ -22,12 +30,12 @@ export const Appbar = () => {
         <div className="flex items-center gap-2 text-black ">
         <div className="rounded-full items-center h-9 w-9 bg-blue-500 text-white flex justify-center ">
                 <div className="flex  flex-col justify-center h-6  text-sm">
-                    U 
+                    {user.firstName[0]} 
                 </div>
                 
             </div>
             <div className="flex flex-col mr-4  items-center min-w-fit  justify-center h-9  ">
-                <h1 className="text-blue-500 font-bold">"dfs"</h1>              
+                <h1 className="text-blue-500 font-bold">{user.firstName}</h1>              
             </div>
             
             <button className="bg-blue-500  text-white  p-2 rounded-md" onClick={user? ()=>{console.log(user)}:exit }>{user? "Logout":"Login"}</button>

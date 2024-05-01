@@ -52,7 +52,7 @@ export const SendMoney = () => {
                 </div>
                 <div class="p-6">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-full bg-purple-700 flex items-center justify-center">
+                    <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
                     <span class="text-2xl text-white">{name[0].toUpperCase()} </span>
                     </div>
                     <h3 class="text-2xl font-semibold">{name}</h3>

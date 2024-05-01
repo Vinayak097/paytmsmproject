@@ -9,7 +9,7 @@ import { useUser } from "../hooks/user"
 
 export const Signup = () => {
   const navigate=useNavigate();
-  const {addUser}=useUser();
+  const addUser=useUser();
   
   const [username,setUsername]=useState("");
   const [Password,setPassword]=useState("");
@@ -30,17 +30,18 @@ export const Signup = () => {
             })
         })
         
-        
-      .then(r => {const data=r.json();
-        console.log(data.token," token setteld");
-        
-        addUser(data.user,data.token);
-
-        navigate("/main")
-        
-      })
-      .catch(error => console.log('Error fetching data:', error)
-     );
+        .then(async(response) =>{
+          if(response.ok){
+          const data=await response.json();
+          addUser(data.user,data.token);
+          navigate("/main");
+          }else{
+            throw new error 
+                }
+    
+        })
+        .catch((error) => 
+        alert("error in sigin",error));
     };
 
 

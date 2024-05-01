@@ -3,8 +3,9 @@ import { Appbar } from './Appbar'
 import Sidebar from '../components/Sidebar'
 import { SendMoney } from './SendMoney'
 import { Users } from './Users'
+import { Toaster } from 'react-hot-toast'
 
-
+import Transaction from './Transaction'
 function Home() {
   return (
       <div className='flex  flex-col  h-screen items-center '>
@@ -15,12 +16,12 @@ function Home() {
             <Sidebar />
           </div >
           <div className= 'flex gap-5 mx-2 h-full w-full '>
-            <div className=' h-5/6 w-3/6'>
-              <Users/>
+            <div className=' w-3/6'>
+              <Users />
 
             </div>
-            <div className='h-5/6 w-3/6'>
-            
+            <div className=''>
+
             
 
             </div>
@@ -28,6 +29,7 @@ function Home() {
 
           </div>
         </div>  
+        <Toaster></Toaster>
 
       </div>
   )

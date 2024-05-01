@@ -1,11 +1,13 @@
 import { useContext } from "react";
 import { UserContext } from "../context";
 import { useLocalStorage } from "./localstorage";
+import { json } from "react-router-dom";
 
 
   export const useUser = () => {
     const { user, setname } = useContext(UserContext);
-    const { setItem,removeItem } = useLocalStorage();
+    
+    const { setItem,removeItem ,getItem} = useLocalStorage();
     let temp={
         firstName:"abc"
     }
@@ -18,10 +20,18 @@ import { useLocalStorage } from "./localstorage";
       setItem("user",parse)
     };
   
+    function getUser(user){
+      const u=localStorage.getItem("user")
+      const data=JSON.parse(u)
+      console.log("u", data)
+      
+      
+      return data;      
+    }
     const removeUser = () => {
         removeUser("user")
         removeItem("token");
     };
   
-    return { user, addUser, removeUser };
+    return { user, addUser,getUser, removeUser };
   };

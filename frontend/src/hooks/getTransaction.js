@@ -16,11 +16,11 @@ export const usegetTransaction=()=>{
     Authorization:"Bearer "+localStorage.getItem("token")
 },
     body:JSON.stringify({
-        to:id,
-        amount:amount
+        recieverId:"662e15cd17d90c3f5f77a74a",
+        
     })
     .then((response)=>{
-        const data=JSON.stringify(response);
+        const data=response
         setTransactions(data)
         console.log("transaction setled ")
         console.log(data)

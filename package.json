@@ -1,1 +1,23 @@
-{}
+{
+  "name": "paytm-handy",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "server": "nodemon backend/index.js",
+		"start": "node backend/index.js",
+		"build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/mongoose": "^5.11.97",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.0",
+    "nodemon": "^3.1.0",
+    "zod": "^3.22.4"
+  }
+}

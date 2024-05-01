@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { usegetTransaction } from '../hooks/getTransaction'
 
 function Transaction() {
   const transactions=usegetTransaction();
+
+  
   console.log(transactions);
   return (
     <div className='h-full bg-white w-full rounded-lg'>

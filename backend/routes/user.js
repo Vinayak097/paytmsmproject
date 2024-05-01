@@ -152,10 +152,11 @@ router.put("/update", authMiddleware, async (req, res) => {
 })
 router.get("/bulk", async (req, res) => {
     const filter=req.query.filter;
-    const uname=req.query.name||"";
+    const userd=await User.find({_id:req.userId});
+    const firstName=userd.firstName;
     console.log("usrs filter",filter )
     try {
-        const users = await User.find({email: { $regex: filter, $options: 'i' },name:{$ne:uname}}).select("-password"); // Find all users without any filtering
+        const users = await User.find({email: { $regex: filter, $options: 'i' },firstName:{$ne:firstName}}).select("-password"); // Find all users without any filtering
        
         res.json({
             users: users.map(user => ({

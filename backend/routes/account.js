@@ -17,7 +17,8 @@ router.get("/balance", authMiddleware, async (req, res) => {
         balance: account.balance
     })
 }catch(e){
-    return res.status(400).json("unthourized",e)
+    
+    return res.json("unthourized",e)
 }
 });
 

@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
-import { UserContext } from "../context";
+
 
 export const useLocalStorage = () => {
-  const {user,setname}=useContext(UserContext)
+ 
   const [value, setValue] = useState("");
 
   const setItem = (key, value) => {
