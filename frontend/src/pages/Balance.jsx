@@ -1,17 +1,23 @@
-
-
-export const Balance = ({ value }) => {
+import { usegetbalance } from "../hooks/getbalance"
+import toast, { Toaster } from "react-hot-toast";
+import { Button } from "../components/Button";
+export const Balance = () => {
     
-  
+    const {balance,checkbalance}=usegetbalance();
    
-    console.log("value in balance ",value)
+   
     
-    return <div className="flex">
-        <div className="font-bold pl-2 text-lg">
+    return <div className="p-2 h-full shadow rounded-lg flex bg-white flex-col">
+        <div className="font-bold text-lg text-blue-500">
           balance
         </div>
-        <div className="font-semibold ml-4 text-lg">
-            Rs {value}
+        <div className="font-semibold  text-lg">
+            Rs. {balance} 
         </div>
+        <div className="w-24 ">
+        <Button  label={"refresh"} onClick={()=>{checkbalance()}}></Button>
+
+        </div>
+        
     </div>
 }

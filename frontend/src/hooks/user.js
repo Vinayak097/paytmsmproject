@@ -29,7 +29,7 @@ import { json } from "react-router-dom";
       return data;      
     }
     const removeUser = () => {
-        removeUser("user")
+        removeItem("user")
         removeItem("token");
     };
   

@@ -1,0 +1,23 @@
+import { useEffect, useState } from "react"
+
+import axios from "axios"
+import toast from "react-hot-toast"
+
+export const usegetbalance=()=>{
+    const [balance,setbalance]=useState(0)
+    async function checkbalance(){
+        const r=await axios.get("http://localhost:3000/api/v1/account/balance",{
+            headers:{
+                authorization:'Bearer '+localStorage.getItem("token")
+            }
+        })
+        const b=parseInt(r.data.balance)
+        
+       
+        setbalance(b)
+    }
+    useEffect(()=>{
+        checkbalance()        
+    },[])
+    return {balance};
+}

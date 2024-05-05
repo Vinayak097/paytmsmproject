@@ -18,6 +18,8 @@ export const Appbar = () => {
         removeUser("token");
         navigate("/signin")
     }
+    
+    
 
    
 
@@ -38,7 +40,7 @@ export const Appbar = () => {
                 <h1 className="text-blue-500 font-bold">{user.firstName}</h1>              
             </div>
             
-            <button className="bg-blue-500  text-white  p-2 rounded-md" onClick={user? ()=>{console.log(user)}:exit }>{user? "Logout":"Login"}</button>
+            <button className="bg-blue-500  text-white  p-2 rounded-md" onClick={user? exit:"" }>{user? "Logout":"Login"}</button>
         </div>
     </div>
     </div>

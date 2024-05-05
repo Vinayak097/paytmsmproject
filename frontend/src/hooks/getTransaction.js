@@ -1,39 +1,43 @@
 import axios from 'axios'
-
-import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useLocalStorage } from './localstorage';
 
 
 
 
 export const usegetTransaction=()=>{
-    
-    const [transactions,setTransactions]=useState();
+    const {getItem}=useLocalStorage()
+    const token=getItem;
+   
 
-    useEffect(()=>{
-        fetch("http://localhost:3000/api/v1/account/getTchat",{
-    method:"POST",headers:{
-        'Content-Type': 'application/json',
-    Authorization:"Bearer "+localStorage.getItem("token")
-},
-    body:JSON.stringify({
-        recieverId:"662e15cd17d90c3f5f77a74a",
-        
-    })
-    .then((response)=>{
-        const data=response
-        setTransactions(data)
-        console.log("transaction setled ")
-        console.log(data)
-    })
-    .catch((e)=>{
-        console.log("eorror in geting data ")
-        toast.error("erro in geting transactions")
-        
-        console.log(e)
-    })
-})
-        
-    },[])
-    return {transactions}
+     const  getTransaction =async(recieverId)=>{
+        let data = JSON.stringify({
+            "recieverId": recieverId
+          });
+          
+          let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://localhost:3000/api/v1/account/getTchat',
+            headers: { 
+              'authorization': 'Bearer '+localStorage.getItem("token"), 
+              'Content-Type': 'application/json', 
+             
+            },
+            data : data
+          };
+          
+          axios.request(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data.chat));
+          })
+          .catch((error) => {
+            toast.error("eror fetching transaction :"+error)
+            console.log(error);
+          });
+          return data;
+    }
+    
+    return {getTransaction}
 }
 

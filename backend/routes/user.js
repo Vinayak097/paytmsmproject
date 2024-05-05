@@ -13,23 +13,23 @@ const signupBody = zod.object({
     email: zod.string().email(),
 	firstName: zod.string(),
 	lastName: zod.string(),
-	password: zod.string()
-})
+	password: zod.string().min(6)})
 router.get("/" ,(req,res)=>{
     res.send("api/v1/ active")
 })
 router.post("/signup", async (req, res) => {
     const { success } = signupBody.safeParse(req.body)
+    console.log(success)
     if (!success) {
         return res.status(411).json({
-            message: "Email already taken sd / Incorrect inputs"
+            message: " Incorrect inputs"
         })
     }
     try {
         const existingUser = await User.findOne({ email: req.body.email });
         if (existingUser) {
             return res.status(411).json({
-                            message: "Email already pass taken/Incorrect inputs"
+                            message: "Email already exist go to signin"
                         })
            
         } else {
@@ -67,7 +67,7 @@ router.post("/signup", async (req, res) => {
             // Handle successful user creation
         }
     } catch (error) {
-        res.json({e:error,msg:"error in signup"})
+        res.json({e:error.message,msg:"error in signup"})
         // Handle other errors
     }
 

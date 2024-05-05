@@ -18,8 +18,8 @@ export const Users = () => {
 
     return(
         <>
-        <div className="p-2 h-3/6  rounded-lg bg-white">
-            <div className="font-bold text-lg">
+        <div className="p-2 h-full  shadow  rounded-lg bg-white overflow-auto">
+            <div className="font-bold text-lg text-blue-500">
                 Users
             </div>
             <div className=" my-2">

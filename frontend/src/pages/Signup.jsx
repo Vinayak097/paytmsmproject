@@ -41,7 +41,7 @@ export const Signup = () => {
     
         })
         .catch((error) => 
-        alert("error in sigin",error));
+        console.log("error in signup"));
     };
 
 
