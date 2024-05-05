@@ -1,18 +1,20 @@
 import { useContext, useState } from "react";
 import { useSearchParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context";
+import Spinner from "../components/Spinner"
 import toast, { Toaster } from "react-hot-toast";
 
 export const SendMoney = () => {
     const [amount,setAmount]=useState(0);
     const navigate=useNavigate();
+    const [loading,setloding]=useState(false)
     
     const [searchparams]=useSearchParams();
     
     const id=searchparams.get("id");
     const name=searchparams.get("name");
     const transers=()=>{
+        setloding(true)
         fetch("http://localhost:3000/api/v1/account/transfer",{
             method:"POST",headers:{
                     'Content-Type': 'application/json',
@@ -24,6 +26,7 @@ export const SendMoney = () => {
                 })  
         })
         .then(async response=>{
+            setloding(false)
             const data =await response.json();
             if(response.ok){
                 console.log("toasing")
@@ -37,7 +40,10 @@ export const SendMoney = () => {
                 throw new Error(data.message);
             }
         })
-        .catch((e)=>alert("error sendmoney: "+e));
+        .catch((e)=>{
+            setloding(false)
+        toast.error(e.message)
+            alert("error sendmoney: "+e)});
 
 
 }
@@ -74,7 +80,7 @@ export const SendMoney = () => {
                     />
                     </div>
                     <button onClick={async()=> {transers()}} class="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
-                        Initiate Transfer
+                        {loading? <Spinner></Spinner> :"Initiate Transfer"}
                     </button>
                     <Toaster></Toaster>
                 </div>

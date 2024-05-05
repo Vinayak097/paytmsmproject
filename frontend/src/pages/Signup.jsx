@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { useUser } from "../hooks/user"
 import toast from "react-hot-toast"
 import { Toaster } from "react-hot-toast"
+import Spinner from "../components/Spinner"
 
 export const Signup = () => {
   const navigate=useNavigate();
@@ -17,7 +18,9 @@ export const Signup = () => {
   const [Password,setPassword]=useState("");
   const [firstName,setfristName]=useState("");
   const [lastName,setlastName]=useState("");
+  const [loading,setloading]=useState(false)
   const handleSignup = async() => {
+    setloading(true)
     console.log(username,firstName,lastName,Password)
     
     const response=await fetch("http://localhost:3000/api/v1/user/signup",{
@@ -34,6 +37,7 @@ export const Signup = () => {
     })
     
     const data=await response.json();
+    setloading(false)
       if(response.ok){
       
       console.log("success")
@@ -45,6 +49,7 @@ export const Signup = () => {
         toast.error(data.message)
 
       }
+      
 
   
    
@@ -73,7 +78,7 @@ export const Signup = () => {
         <div className="pt-4">
           <Button onClick={()=>{ handleSignup()
           
-          }} label={"Sign up"} />
+          }} label={loading? <Spinner></Spinner>:"Sign up"} />
         </div>
         <BottomWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/signin"} />
       </div>

@@ -9,15 +9,19 @@ import { useState } from "react"
 import { Toaster, toast } from 'react-hot-toast';
 import { useLocalStorage } from "../hooks/localstorage"
 import { useUser } from "../hooks/user"
+import Spinner from "../components/Spinner"
 // import { BottomWarning } from "../components/BottomWarning"
 export const Signin = () => {
   const navigate=useNavigate();
   const [email,setemail]=useState("");
   const [Password,setPassword]=useState("")
+  const [loading,setloading]=useState(false)
   const {addUser}=useUser()
    function naves(){
+    setloading(true)
     if(!email || !Password){
       toast.error("fill credintials")
+      setloading(false)
       return 
     }
      fetch("http://localhost:3000/api/v1/user/signin",{
@@ -32,7 +36,9 @@ export const Signin = () => {
     })
    
     .then(async(response) =>{
+      
       const data=await response.json();
+      setloading(false)
       if(response.ok){
       
         console.log("success")
@@ -47,8 +53,9 @@ export const Signin = () => {
 
     })
     .catch((error) =>
+     { setloading(false)
       
-      toast.error(error)
+      toast.error(error)}
     );
   }  
 
@@ -64,7 +71,7 @@ export const Signin = () => {
           setPassword(e.target.value);
         }} placeholder="123456" label={"Password"} />
         <div className="pt-4">
-          <Button onClick={async ()=>{await naves()}} label={"Sign in"} />
+          <Button onClick={async ()=>{await naves()}} label={loading? <Spinner></Spinner>:"Sign in"} />
         </div>
         <BottomWarning label={"Don't have an account?"} buttonText={"Sign up"} to={"/signup"} />
         <Toaster></Toaster>
