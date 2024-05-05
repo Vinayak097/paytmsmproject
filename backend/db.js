@@ -2,7 +2,8 @@
 const mongoose = require('mongoose');
 const { string } = require('zod');
 
-
+const mongourl=process.env.mongo_url;
+console.log("mongourl ",mongourl)
 mongoose.connect("mongodb+srv://newuser:simple@cluster0.nezzouv.mongodb.net/ptm-sm2")
      
            

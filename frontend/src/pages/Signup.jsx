@@ -6,46 +6,54 @@ import { InputBox } from "../components/InputBox"
 import { SubHeading } from "../components/SubHeading"
 import { useNavigate } from "react-router-dom"
 import { useUser } from "../hooks/user"
+import toast from "react-hot-toast"
+import { Toaster } from "react-hot-toast"
 
 export const Signup = () => {
   const navigate=useNavigate();
-  const addUser=useUser();
+  const {addUser}=useUser();
   
   const [username,setUsername]=useState("");
   const [Password,setPassword]=useState("");
   const [firstName,setfristName]=useState("");
   const [lastName,setlastName]=useState("");
   const handleSignup = async() => {
+    console.log(username,firstName,lastName,Password)
     
-    await fetch("http://localhost:3000/api/v1/user/signup", {
-            method: 'POST',
+    const response=await fetch("http://localhost:3000/api/v1/user/signup",{
+    method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                username: username, 
-                firstName: firstName,
-                lastName: lastName,
-                password: Password
-            })
-        })
-        
-        .then(async(response) =>{
-          if(response.ok){
-          const data=await response.json();
-          addUser(data.user,data.token);
-          navigate("/main");
-          }else{
-            throw new error 
-                }
+      body:JSON.stringify({
+        firstName:firstName,
+        lastName:lastName,
+        email:username,
+        password:Password
+      })
+    })
     
-        })
-        .catch((error) => 
-        console.log("error in signup"));
+    const data=await response.json();
+      if(response.ok){
+      
+      console.log("success")
+      addUser(data.user,data.token);
+      navigate("/main");
+      }
+      else{
+        console.log("error in signup",data.message);
+        toast.error(data.message)
+
+      }
+
+  
+   
+        
     };
 
 
     return <div className=" h-screen flex justify-center">
+      
     <div className="flex flex-col justify-center">
       <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
         <Heading label={"Sign up"} />
@@ -69,6 +77,7 @@ export const Signup = () => {
         </div>
         <BottomWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/signin"} />
       </div>
+      <Toaster></Toaster>
     </div>
   </div>
 }

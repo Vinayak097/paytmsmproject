@@ -32,7 +32,7 @@ router.post("/signup", async (req, res) => {
                             message: "Email already exist go to signin"
                         })
            
-        } else {
+        } 
             // Create a new user if the email is not already registered
             const newUser = await User.create({
                 email: req.body.email,
@@ -54,7 +54,7 @@ router.post("/signup", async (req, res) => {
         userId
     }, JWT_SECRET);
 
-    res.json({
+    return res.json({
         message: "User created successfully",
         token: token,
         user:{
@@ -65,10 +65,11 @@ router.post("/signup", async (req, res) => {
         }
     })
             // Handle successful user creation
-        }
+        
     } catch (error) {
-        res.json({e:error.message,msg:"error in signup"})
-        // Handle other errors
+        res.status(500)
+    res.json({error:error.message})    
+    return;
     }
 
 

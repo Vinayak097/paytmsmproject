@@ -9,7 +9,7 @@ export const SendMoney = () => {
     const navigate=useNavigate();
     
     const [searchparams]=useSearchParams();
-    const user=useContext(UserContext);
+    
     const id=searchparams.get("id");
     const name=searchparams.get("name");
     const transers=()=>{

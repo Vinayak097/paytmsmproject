@@ -19,7 +19,7 @@ function Home() {
           </div >
           <div className= 'flex flex-col gap-2 mx-2 h-full w-full '>
             <div className='flex  gap-4 h-3/6'> 
-                <div className=' w-3/6'>
+                <div className=' w-3/6 '>
                     <Users />
 
                   </div>

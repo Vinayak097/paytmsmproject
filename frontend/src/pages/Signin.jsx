@@ -30,18 +30,26 @@ export const Signin = () => {
         password:Password
       })
     })
+   
     .then(async(response) =>{
-      if(response.ok){
       const data=await response.json();
-      addUser(data.user,data.token);
-      navigate("/main");
-      }else{
-        throw new error 
-            }
+      if(response.ok){
+      
+        console.log("success")
+        addUser(data.user,data.token);
+        navigate("/main");
+        }
+        else{
+          console.log("error in signup",data.message);
+          toast.error(data.message)
+  
+        }
 
     })
-    .catch((error) => 
-    alert("error in sigin",error));
+    .catch((error) =>
+      
+      toast.error(error)
+    );
   }  
 
     return <div className="h-screen flex justify-center">

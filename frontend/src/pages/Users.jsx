@@ -22,12 +22,12 @@ export const Users = () => {
             <div className="font-bold text-lg text-blue-500">
                 Users
             </div>
-            <div className=" my-2">
+            <div className=" my-2 ">
                 <input onChange={(e) => {
                     setFilter(e.target.value);
                 }} type="text" placeholder="Search users..." className="bg-blue-50 w-full px-2 py-1 border rounded border-slate-200"/>
             </div>
-            <div className="flex  flex-col gap-1 ">
+            <div className="flex  flex-col gap-1">
                 {users.map(user => <User key={user._id} user={user} />)}
             </div>
             </div>
