@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react'
 import { usegetTransaction } from '../hooks/getTransaction'
 
-function Transaction({recieverId}) {
-  const {getTransaction}=usegetTransaction();
-  const data=getTransaction(recieverId)
-  console.log(data,"data")
+function Transaction({name,amount }) {
   
-  console.log();
   return (
-    <div className=' shadow p-2 h-full  bg-white rounded-lg'>
-        <h1 className='text-blue-500 font-semibold text-lg'>transactions</h1>
-        <div className='flex justify-between'>
-            <p>transactionname </p>
-            <p>amount</p>
-            <p>time</p>
+    <div className='  bg-white shadow rounded-lg  '>
+      
+        <div className='flex justify-between gap-2  m-2 bg-white  border-b-black p-2'>
+            <p>{name ||""} </p>
+            
+
+          
+            <p>{amount ||""}</p>
+           
         </div>
         
     </div>

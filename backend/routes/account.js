@@ -1,7 +1,7 @@
 // backend/routes/account.js
 const express = require('express');
 const { authMiddleware } = require('../middleware');
-const { Account } = require('../db');
+const { Account, User } = require('../db');
 const { default: mongoose } = require('mongoose');
 const {onTransactionMSG}=require('../db')
 
@@ -58,12 +58,14 @@ router.post("/transfer", authMiddleware, async (req, res) => {
     //     receiverId:to,
     //     amount:amount,
     // });
+    // await newMessage.save()
     
-    await onTransactionMSG.create({
+    const save= await onTransactionMSG.create({
         senderId:senderId,
         recieverId:to,
         amount:amount
     });
+    console.log("save: ",save)
 
     // Commit the transaction
     await session.commitTransaction();
@@ -73,7 +75,7 @@ router.post("/transfer", authMiddleware, async (req, res) => {
 });
 
 
-router.post('/getTchat', authMiddleware,async(req,res)=>{
+router.post('/getTchat/to', authMiddleware,async(req,res)=>{
 
        
     try{ 
@@ -92,7 +94,57 @@ router.post('/getTchat', authMiddleware,async(req,res)=>{
 }catch(e){
     res.status(500).json("error in /getchat",e)
 }
-
-    
+   
 })
+router.get('/getTchat', authMiddleware,async(req,res)=>{
+    
+       
+    try{ 
+
+        const userId=req.userId;
+        const user=await User.findById(userId)
+        if(!user){
+            return res.status(404).json({message:"user not found "})
+        }
+       
+        const chat = await onTransactionMSG.find({
+            senderId: userId
+        })
+        .populate("senderId", "-password")
+        .populate("recieverId", "-password")
+        .sort({ createdAt: -1 });
+        
+   return  res.status(200).json({chat:chat})
+   
+}catch(e){
+    console.log(e)
+    return res.status(500).json({message:"error in /getchat"})
+}
+   
+})
+
+router.put('/add/:amount',authMiddleware,async(req,res)=>{
+    try{
+    const userId=req.userId;
+    const amount=req.params.amount;
+    if(!userId){
+        return res.status(403).json({message:"unathorized act "})
+    }
+    const account=await Account.findOne({userId});
+
+    if(!account){
+        return res.status(404).json({message:"account not found"})
+    }
+    if(account.balance>99999){
+        return res.status(411).json({message:"you have enough balance"})
+    }
+    await Account.updateOne({ userId: req.userId }, { $inc: { balance: amount } })
+    return res.status(200).json({message:"amount added successfully"})
+}catch(error){
+    console.log("error in add amount ",error.message)
+    return res.status(500).json({error :"Internal error "})
+}
+})
+
+
 module.exports = router;

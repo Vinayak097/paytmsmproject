@@ -1,17 +1,24 @@
 import { usegetbalance } from "../hooks/getbalance"
-import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import { Button } from "../components/Button";
 import Spinner from "../components/Spinner";
+import toast, { Toaster } from "react-hot-toast";
+
 export const Balance = () => {
     
-    const {balance,loading,setloading,checkbalance}=usegetbalance();
+    const {balance,loading,setloading}=usegetbalance();
+    const checkbalance=usegetbalance()
   
-   
+   const handler=()=>{
+    toast.success("event pending")
+
+   }
    
     
     return <div className="p-2 h-full shadow rounded-lg flex bg-white flex-col">
-        <div className="font-bold text-lg text-blue-500">
-          balance
+        <div className=" flex items-center gap-3 font-bold text-lg text-blue-500">
+          balance  <IoIosAddCircleOutline onClick={()=>{handler}} className="text-xl cursor-pointer hover:bg-blue-500 rounded-full"></IoIosAddCircleOutline>
         </div>
         <div className="font-semibold  text-lg">
             Rs. {balance} 
@@ -25,6 +32,7 @@ export const Balance = () => {
             checkbalance()}}></Button>
 
         </div>
+        
         
     </div>
 }

@@ -7,6 +7,7 @@ export const usegetbalance=()=>{
     const [balance,setbalance]=useState(0)
     const [loading,setloading]=useState(false)
     async function checkbalance(){
+        console.log("enter checkbalance")
         setloading(true)
         const r=await axios.get("http://localhost:3000/api/v1/account/balance",{
             headers:{
@@ -19,6 +20,7 @@ export const usegetbalance=()=>{
         setbalance(b)
         setloading(false)
     }
+    
     useEffect(()=>{
         checkbalance()        
         

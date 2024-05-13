@@ -1,4 +1,4 @@
-
+const { authMiddleware } = require('../middleware');
 const {onTransactionMSG}=require('../db')
 const express=require('express')
 
@@ -21,5 +21,8 @@ route.post('/Tstore',(req,res)=>{
     }
      
 }) 
+route.get("/getT",(req,res)=>{
+    res.send("transactions in implementing")
+})
 
 module.exports=route;
