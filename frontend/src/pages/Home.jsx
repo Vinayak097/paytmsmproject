@@ -12,25 +12,25 @@ function Home() {
       <div className='flex  flex-col  h-screen items-center '>
         <Appbar />
 
-        <div className='flex flex-1 min-w-[80%] max-w-[90%] justify-center gap-2  m-4 mx-10 m-y-b-2   '>
+        <div className='flex flex-1 min-w-[80%] h-[80%]  max-w-[90%] justify-center gap-2  m-4 mx-10 m-y-b-2   '>
           <div className=''>
             <Sidebar />
           </div >
-          <div className= 'flex flex-col gap-5 mx-2 h-full w-full '>
-            <div className='flex gap-1'>
-              <div className=' w-3/6 h-3/6'>
+          <div className= 'flex flex-col gap-2 mx-2 h-full w-full '>
+            <div className='flex gap-2  h-3/6 '>
+              <div className=' w-3/6   '>
               <Users />
 
                 </div>
-                <div className=' '>
-                  <div className=''>
+                <div className=' flex justify-center items-center bg-white w-3/6 rounded-lg'>
+                  <div className=' flex justify-center  items-center'>
                   <Balance></Balance>
 
                   </div>
                   
                 </div>  
             </div>
-            <div className='flex-1 flex h-full w-full'>
+            <div className=' w-full h-full'>
               <Transaction> </Transaction>
             </div>
           </div>

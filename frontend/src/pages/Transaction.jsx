@@ -8,7 +8,7 @@ function Transaction({recieverId}) {
   
   console.log();
   return (
-    <div className='h-full shadow p-2  bg-white w-full rounded-lg'>
+    <div className=' shadow p-2 h-full  bg-white rounded-lg'>
         <h1 className='text-blue-500 font-semibold text-lg'>transactions</h1>
         <div className='flex justify-between'>
             <p>transactionname </p>
