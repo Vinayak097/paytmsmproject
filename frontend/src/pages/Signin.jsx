@@ -48,7 +48,7 @@ export const Signin = () => {
         else{
           console.log("error in signup",data.message);
           toast.error(data.message)
-  
+          throw new error  
         }
 
     })
