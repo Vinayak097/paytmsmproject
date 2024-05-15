@@ -98,7 +98,7 @@ router.post("/signin", async (req, res) => {
    
     console.log("data :" );
     if (!user) {
-        res.status(403).json("user not found ")
+        res.status(403).json({message:"user not found "})
        return;  
         
     }
@@ -122,8 +122,8 @@ router.post("/signin", async (req, res) => {
     })
 }catch(e){
     res.status(500)
-    res.json({error:e})    
-    return;
+    return  res.json({error:e})    
+  
 
 }
 
