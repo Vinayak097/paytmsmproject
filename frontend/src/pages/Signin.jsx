@@ -17,14 +17,14 @@ export const Signin = () => {
   const [Password,setPassword]=useState("")
   const [loading,setloading]=useState(false)
   const {addUser}=useUser()
-   function naves(){
+   async function naves(){
     setloading(true)
     if(!email || !Password){
       toast.error("fill credintials")
       setloading(false)
       return 
     }
-     fetch("http://localhost:3000/api/v1/user/signin",{
+     const response=await fetch("http://localhost:3000/api/v1/user/signin",{
     method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -35,28 +35,19 @@ export const Signin = () => {
       })
     })
    
-    .then(async(response) =>{
-      
-      const data=await response.json();
-      setloading(false)
+    const data=await response.json();
+    setloading(false)
       if(response.ok){
       
-        console.log("success")
-        addUser(data.user,data.token);
-        navigate("/main");
-        }
-        else{
-          console.log("error in signup",data.message);
-          toast.error(data.message)
-          throw new error  
-        }
+      console.log("success")
+      addUser(data.user,data.token);
+      navigate("/main");
+      }
+      else{
+        console.log("error in signup",data.message);
+        toast.error(data.message)
 
-    })
-    .catch((error) =>
-     { setloading(false)
-      
-      toast.error(error)}
-    );
+      }
   }  
 
     return <div className="h-screen flex justify-center">

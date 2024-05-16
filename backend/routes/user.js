@@ -94,6 +94,11 @@ router.post("/signin", async (req, res) => {
             email: req.body.email
            
         })
+        const passpass=user.password===req.body.password;
+        if(!passpass || !user){
+            return res.status(411).json({message:"incorrect email/password inputs"})
+        }
+
     console.log(user)
    
     console.log("data :" );

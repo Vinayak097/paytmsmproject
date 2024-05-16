@@ -39,7 +39,7 @@ function User({user}) {
     const navigate = useNavigate();
 
     return(
-        <div className="bg-blue-50 border-b-2 p-1 rounded-lg flex justify-between  ">
+        <div key={user._id} className="bg-blue-50 border-b-2 p-1 rounded-lg flex justify-between  ">
             <div className="flex">
                 <div className="rounded-full h-8 w-8 bg-slate-200 flex justify-center mt-1 mr-2">
                     <div className="flex flex-cpl justify-center h-full text-xl">
