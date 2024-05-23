@@ -7,9 +7,10 @@ import { SubHeading } from "../components/SubHeading"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { Toaster, toast } from 'react-hot-toast';
-import { useLocalStorage } from "../hooks/localstorage"
+
 import { useUser } from "../hooks/user"
 import Spinner from "../components/Spinner"
+import { backend_url } from "../config"
 // import { BottomWarning } from "../components/BottomWarning"
 export const Signin = () => {
   const navigate=useNavigate();
@@ -24,7 +25,7 @@ export const Signin = () => {
       setloading(false)
       return 
     }
-     const response=await fetch("http://localhost:3000/api/v1/user/signin",{
+     const response=await fetch(`${backend_url}/user/signin`,{
     method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

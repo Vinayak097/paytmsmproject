@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { usegetTransaction } from '../hooks/getTransaction'
 
-function Transaction({key,name,amount }) {
+
+
+const Transaction= (({key,name,amount })=> {
   
   return (
     <div key={key} className='  bg-white shadow rounded-lg  '>
@@ -17,6 +19,6 @@ function Transaction({key,name,amount }) {
         
     </div>
   )
-}
+})
 
 export default Transaction

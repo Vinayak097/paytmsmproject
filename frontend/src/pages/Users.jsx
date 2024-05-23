@@ -2,18 +2,18 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import { Button } from "../components/Button";
+import { backend_url } from "../config";
 
 export const Users = () => {
     const [users, setUsers] = useState([]);
     const [filter, setFilter] = useState("");
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
+        axios.get(`${backend_url}/user/bulk?filter=${filter}`)
             .then(response => {
                 setUsers(response.data.users);
                 console.log(response.data.users," this is users.jsx")
             })
-            
     }, [filter]);
 
     return(
@@ -28,14 +28,14 @@ export const Users = () => {
                 }} type="text" placeholder="Search users..." className="bg-blue-50 w-full px-2 py-1 border rounded border-slate-200"/>
             </div>
             <div className="flex  flex-col gap-1">
-                {users.map(user => <User key={user._id} user={user} />)}
+                {users.map(user => <User  user={user} />)}
             </div>
             </div>
         </>
     )
 }
 
-function User({user}) {
+const  User=({user}) =>{
     const navigate = useNavigate();
 
     return(

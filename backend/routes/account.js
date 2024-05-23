@@ -17,8 +17,8 @@ router.get("/balance", authMiddleware, async (req, res) => {
         balance: account.balance
     })
 }catch(e){
-    
-    return res.json("unthourized",e)
+    console.log(e.message)    
+    return res.status(500).json({message:"INternal server error"})
 }
 });
 
@@ -124,9 +124,14 @@ router.get('/getTchat', authMiddleware,async(req,res)=>{
 })
 
 router.put('/add/:amount',authMiddleware,async(req,res)=>{
+    console.log('enter amount')
     try{
     const userId=req.userId;
     const amount=req.params.amount;
+    console.log("pass")
+    if(amount>9999){
+        return res.status(400).json({message:"enter an amount less than 10k"})
+    }
     if(!userId){
         return res.status(403).json({message:"unathorized act "})
     }

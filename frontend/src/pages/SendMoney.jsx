@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner"
 import toast, { Toaster } from "react-hot-toast";
-
+import { backend_url } from "../config";
 export const SendMoney = () => {
     const [amount,setAmount]=useState(0);
     const navigate=useNavigate();
@@ -15,7 +15,7 @@ export const SendMoney = () => {
     const name=searchparams.get("name");
     const transers=()=>{
         setloding(true)
-        fetch("http://localhost:3000/api/v1/account/transfer",{
+        fetch(`${backend_url}/account/transfer`,{
             method:"POST",headers:{
                     'Content-Type': 'application/json',
                 Authorization:"Bearer "+localStorage.getItem("token")

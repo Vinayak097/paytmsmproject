@@ -9,6 +9,7 @@ import { useUser } from "../hooks/user"
 import toast from "react-hot-toast"
 import { Toaster } from "react-hot-toast"
 import Spinner from "../components/Spinner"
+import { backend_url } from "../config"
 
 export const Signup = () => {
   const navigate=useNavigate();
@@ -23,7 +24,7 @@ export const Signup = () => {
     setloading(true)
     console.log(username,firstName,lastName,Password)
     
-    const response=await fetch("http://localhost:3000/api/v1/user/signup",{
+    const response=await fetch(`${backend_url}/user/signup`,{
     method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -49,11 +50,6 @@ export const Signup = () => {
         toast.error(data.message)
 
       }
-      
-
-  
-   
-        
     };
 
 
