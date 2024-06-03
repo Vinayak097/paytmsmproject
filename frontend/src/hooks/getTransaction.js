@@ -2,7 +2,7 @@ import axios from 'axios'
 import toast from 'react-hot-toast';
 import { useLocalStorage } from './localstorage';
 import { useEffect, useState } from 'react';
-
+import { backend_url } from '../config';
 
 
 
@@ -10,6 +10,7 @@ export const usegetTransaction=()=>{
     const {getItem}=useLocalStorage()
     const token=getItem;
     const [transaction,setTransactions]=useState([])
+    console.log(transaction)
    
 
      useEffect(()=>{
@@ -17,7 +18,7 @@ export const usegetTransaction=()=>{
         console.log("use iefferuiodnfsodfjdls")
       
         try{
-        const response=await axios.get("http://localhost:3000/api/v1/account/getTchat",{
+        const response=await axios.get(`${backend_url}/account/getTchat`,{
           headers:{
             'Content-Type': 'application/json',
         Authorization:"Bearer "+localStorage.getItem("token")

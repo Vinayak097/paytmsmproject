@@ -26,7 +26,7 @@ export const Signin = () => {
       return 
     }
      const response=await fetch(`${backend_url}/user/signin`,{
-    method: 'POST',
+     method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },

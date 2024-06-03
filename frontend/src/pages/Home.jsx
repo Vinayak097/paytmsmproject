@@ -1,7 +1,7 @@
 import React from 'react'
 import { Appbar } from './Appbar'
 import Sidebar from '../components/Sidebar'
-import { SendMoney } from './SendMoney'
+
 import { Users } from './Users'
 import { Toaster } from 'react-hot-toast'
 import { RecoilRoot } from 'recoil'
@@ -25,9 +25,8 @@ function Home() {
           </div >
           <div className= 'flex flex-col gap-2 mx-2 h-full w-full '>
             <div className='flex gap-2  h-3/6 '>
-              <div className=' w-3/6 '>
+              <div className=' w-3/6  bg-white'>
               <Users />
-
                 </div>
                 <div className=' flex justify-center items-center bg-white w-3/6 rounded-lg'>
                   <div className=' flex justify-center  items-center'>

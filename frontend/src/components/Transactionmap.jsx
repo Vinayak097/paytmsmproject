@@ -12,9 +12,6 @@ function Transactionmap() {
          <div className=' bg-white rounded-lg w-full h-full overflow-auto'> <p className='mx-2 h-0 text-blue-500 p-2'>Transactions</p>
             <div className='flex justify-between gap-2 text-blue-500 m-2 bg-white h-2  border-b-black p-2'>
             <p>name </p>
-           
-
-          
             <p >amount</p>
            
         </div>

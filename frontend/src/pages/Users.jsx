@@ -18,7 +18,7 @@ export const Users = () => {
 
     return(
         <>
-        <div className="p-2 h-full  shadow  rounded-lg bg-white overflow-auto">
+        <div className="p-2  h-full shadow  rounded-lg bg-white overflow-auto">
             <div className="font-bold text-lg text-blue-500">
                 Users
             </div>
