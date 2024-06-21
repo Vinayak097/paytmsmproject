@@ -25,30 +25,45 @@ export const Signin = () => {
       setloading(false)
       return 
     }
+    try{
+
+    
      const response=await fetch(`${backend_url}/user/signin`,{
      method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-      body:JSON.stringify({
+      body:{
         email:email,
         password:Password
-      })
+      }
     })
+ 
    
-    const data=await response.json();
+    console.log(response)
+   
+      
+      
+  
+
+    
     setloading(false)
       if(response.ok){
-      
+        const data=response.json();
+        console.log(data)
       console.log("success")
       addUser(data.user,data.token);
       navigate("/main");
+      }else{
+        toast.error("siginin failed")
       }
-      else{
-        console.log("error in signup",data.message);
-        toast.error(data.message)
-
-      }
+      
+  }catch(error){
+    setloading(false)
+    console.log( "error rin signin ",error);
+    
+  }
+    
   }  
 
     return <div className="h-screen flex justify-center">
