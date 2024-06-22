@@ -9,16 +9,20 @@ const { JWT_SECRET } = require("../config");
 const { User, Account } = require('../db');
 const  { authMiddleware } = require("../middleware");
 
+
 const signupBody = zod.object({
-    email: zod.string().email(),
-	firstName: zod.string(),
+    email: zod.string().email().nonempty({message:"fill it"}),
+	firstName: zod.string().nonempty({message:"fill it "}),
 	lastName: zod.string(),
 	password: zod.string().min(6)})
+
+
 router.get("/" ,(req,res)=>{
     res.send("api/v1/ active")
 })
 router.post("/signup", async (req, res) => {
     const { success } = signupBody.safeParse(req.body)
+    
     console.log(success)
     if (!success) {
         return res.status(411).json({
@@ -26,21 +30,25 @@ router.post("/signup", async (req, res) => {
         })
     }
     try {
+        console.log("checkking user")
         const existingUser = await User.findOne({ email: req.body.email });
+        console.log("user find pass")
+        console.log("exitsing user",existingUser)
         if (existingUser) {
             return res.status(411).json({
                             message: "Email already exist go to signin"
-                        })
+                        
+            })
            
         } 
             // Create a new user if the email is not already registered
-            const newUser = await User.create({
+        const newUser = await User.create({
                 email: req.body.email,
                 password: req.body.password,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
             });
-            console.log("pass",newUser)
+        console.log("pass",newUser)
     const userId = newUser._id;
     delete newUser.password;
     console.log("signup" ,userId)
@@ -67,9 +75,10 @@ router.post("/signup", async (req, res) => {
             // Handle successful user creation
         
     } catch (error) {
-        res.status(500)
-    res.json({error:error.message})    
-    return;
+        
+        return res.status(500).json({error:error.message})
+    
+    
     }
 
 
@@ -81,59 +90,49 @@ const signinBody = zod.object({
     email: zod.string().email(),
 	password: zod.string()
 })
-
 router.post("/signin", async (req, res) => {
-    const { success } = signinBody.safeParse(req.body)
-    if (!success) {
-        return res.status(411).json({
-            message: "not passed zod / Incorrect inputs"
-        })
-    }
-    try{
-        const user = await User.findOne({
-            email: req.body.email
-           
-        })
-        const passpass=user.password===req.body.password;
-        if(!passpass || !user){
-            return res.status(411).json({message:"incorrect email/password inputs"})
-        }
-
-    console.log(user)
-   
-    console.log("data :" );
-    if (!user) {
-        res.status(403).json({message:"user not found "})
-       return;  
-        
+    console.log('signin');
+    const payload = signinBody.safeParse(req.body);
+    
+    if (payload.success === false) {
+        return res.status(400).json({
+            message: "Incorrect inputs",
+            errors: payload.error
+        });
     }
 
-    console.log("empty pass")
-    
-   
-    
-    const token = jwt.sign({
-        userId: user._id
-    }, JWT_SECRET);
-    
-   return  res.status(201).json({
-        token: token,
-        user:{
-            userId:user._id,
-            firstName:user.firstName,
-            email:user.email,
-            lastName:user.lastName, 
+    try {
+        const user = await User.findOne({ email: req.body.email });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
-    })
-}catch(e){
-    res.status(500)
-    return  res.json({error:e})    
-  
 
-}
+        // Validate password (you should use bcrypt for secure password comparison)
+        const passwordValid = user.password === req.body.password;
 
-    
-})
+        if (!passwordValid) {
+            return res.status(401).json({ message: "Incorrect email/password combination" });
+        }
+
+        // If user and password are valid, generate JWT token
+        const token = jwt.sign({ userId: user._id }, JWT_SECRET);
+
+        return res.status(200).json({
+            token: token,
+            user: {
+                userId: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email
+            }
+        });
+    } catch (error) {
+        console.error("Error during signin:", error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 
 const updateBody = zod.object({
 	password: zod.string().optional(),
