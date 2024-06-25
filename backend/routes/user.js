@@ -18,6 +18,7 @@ const signupBody = zod.object({
 
 
 router.get("/" ,(req,res)=>{
+    
     res.send("api/v1/ active")
 })
 router.post("/signup", async (req, res) => {
@@ -118,7 +119,7 @@ router.post("/signin", async (req, res) => {
         // If user and password are valid, generate JWT token
         const token = jwt.sign({ userId: user._id }, JWT_SECRET);
 
-        return res.status(200).json({
+        return res.status(200).json({data:{
             token: token,
             user: {
                 userId: user._id,
@@ -126,7 +127,7 @@ router.post("/signin", async (req, res) => {
                 lastName: user.lastName,
                 email: user.email
             }
-        });
+        }});
     } catch (error) {
         console.error("Error during signin:", error);
         return res.status(500).json({ error: "Internal Server Error" });

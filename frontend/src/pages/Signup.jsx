@@ -24,6 +24,7 @@ export const Signup = () => {
     setloading(true)
     console.log(username,firstName,lastName,Password)
     
+    try{
     const response=await fetch(`${backend_url}/user/signup`,{
     method: 'POST',
             headers: {
@@ -37,19 +38,25 @@ export const Signup = () => {
       })
     })
     
-    const data=await response.json();
+    
     setloading(false)
       if(response.ok){
-      
+        const data=await response.json();
       console.log("success")
       addUser(data.user,data.token);
       navigate("/main");
       }
       else{
-        console.log("error in signup",data.message);
-        toast.error(data.message)
+        console.log(response)
+        
+        toast.error("errorin signup")
 
       }
+    }catch(error){
+      setloading(false)
+      toast.error('error in signup')
+      console.log(error)
+    }
     };
 
 

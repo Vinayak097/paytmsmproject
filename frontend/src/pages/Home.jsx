@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar'
 
 import { Users } from './Users'
 import { Toaster } from 'react-hot-toast'
-import { RecoilRoot } from 'recoil'
+
 
 import { Balance } from './Balance'
 
